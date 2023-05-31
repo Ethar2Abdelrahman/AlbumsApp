@@ -1,0 +1,160 @@
+<!-- -----------------------------------Add user bar-------------------------------------- -->
+<br><br>
+<div class="text-white py-3" style="background-color: rgb(0, 69, 69);">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h1 class="m-0 fs-3 m-2 ">Users</h1>
+    <button type="button" class="btn btn-light m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      + Add Users
+    </button>
+  </div>
+</div>
+
+
+<!-- -----------------------------------Table of Users-------------------------------------- -->
+
+<div class="container mt-5">
+  <div class="table-responsive table-responsive-sm">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of Users">
+          <td>{{ u.id }}</td>
+          <td>
+            <!-- navigates to  /user route with the user's ID (u.id) as a parameter -->
+            <a class="font-weight-bold text-decoration-none" [routerLink]="['/user', u.id]">{{ u.name }}</a>
+          </td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.phone }}</td>
+          <td>{{ u.address.city }}, {{ u.address.street }}, {{ u.address.suite }}</td>
+          <!-- -----------Edit button (icon) ------- -->
+          <td>
+            <button type="button" class="btn bg-p text-light" data-bs-toggle="modal" data-bs-target="#update"
+              (click)="edit(u.id)"><i class="fa fa-pencil fa-lg " style="color: rgb(2, 110, 110);"></i></button>
+          </td>
+          <td> <button (click)="deleteUser(u.id)" class="btn btn-sm"><i
+                class="fa fa-trash text-danger fa-lg"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- -----------------------------------Pop up Form For Add new user-------------------------------------- -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">User Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" #name class="form-control" aria-describedby="emailHelp" placeholder="name">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" #email class="form-control" placeholder="Email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="tel" #phone class="form-control" placeholder="number">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">City</label>
+            <select #city class="form-select" id="citySelect">
+              <option selected> city</option>
+              <option let *ngFor="let s of Users" value="{{s.address.city}}">{{s.address.city}}</option>
+            </select>
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Street</label>
+            <input type="text" #street class="form-control" placeholder="street">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">suite</label>
+            <input type="text" #suite class="form-control" placeholder="suite">
+          </div>
+
+          <button type="submit" class="btn btn-primary m-1" value="ADD" data-bs-dismiss="modal"
+            (click)=" ADD(name.value , email.value , phone.value, city.value , street.value , suite.value )">Submit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- -----------------------------------Pop up Form For Edit new user-------------------------------------- -->
+
+<div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">User Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form *ngIf="user">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input type="text" #name class="form-control" placeholder="name" value="{{user.name}}">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Email</label>
+            <input type="email" #email class="form-control" placeholder="Email" value="{{user.email}}">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Phone</label>
+            <input type="tel" #phone class="form-control" placeholder="number" value="{{user.phone}}">
+          </div>
+
+          <div class="mb-3">
+            <label for="citySelect" class="form-label">City</label>
+            <select #city class="form-select">
+              <option selected value="{{user.address.city}}">{{user.address.city}}</option>
+              <option let *ngFor="let s of Users" #city value="{{s.address.city}}">{{s.address.city}}</option>
+            </select>
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Street</label>
+            <input type="text" #street class="form-control" placeholder="street" value="{{user.address.street}}">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">suite</label>
+            <input type="text" #suite class="form-control" placeholder="suite" value="{{user.address.suite}}">
+          </div>
+
+          <input type="submit" value="Update" class="m-auto btn btn-warning" data-bs-dismiss="modal"
+            (click)="update(user.id,name.value,email.value,phone.value,city.value,street.value,suite.value)" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

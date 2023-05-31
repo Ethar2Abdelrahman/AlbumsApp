@@ -1,0 +1,13 @@
+<div>
+  <h2>Photos</h2>
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-12" *ngFor="let photo of photos">   <!--loop in photos [] ,create a col of card  for each photo.-->
+      <div class="card m-5 p-3">
+        <img class="card-img-top" [src]="photo.thumbnailUrl" />
+        <div class="card-body">
+          <h6 class="card-title">{{ photo.title }}</h6>  <!-- displays title of the photo in card -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<!-------------------------------- User Details ---------------------------->
+<br><br><br>
+<div *ngIf="user" class="alert alert-info" style="background-color: rgb(0, 69, 69);">
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="navbar navbar-expand-lg navbar-secondary bg-light">
+        <ul class="navbar-nav mx-auto justify-content-around w-100 h-700">
+          <li class="nav-item">
+            <p class="fs-5 font-weight-bold">{{user.name}}</p>
+          </li>
+          <li class="nav-item">
+            <p class="fs-6 font-weight-bold">{{user.email}}</p>
+            <p class="fs-6 font-weight-bold">{{user.phone}}</p>
+          </li>
+          <li class="nav-item">
+            <p class="fs-6 font-weight-bold">{{user.address.city}}, {{user.address.street}}, {{user.address.suite}}</p>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-------------------------------- User Albums ---------------------------->
+
+<div class="row m-5">
+  <div class="col-md-4 mb-4" *ngFor="let album of albums">
+    <div class="card custom-card border-5  ">
+      <div class="card-body">
+        <h5 class="card-title fs-5">{{ album.title }}</h5>
+        <br>
+       <a [routerLink]="['/albums', album.id, 'photos']"       
+          class=" p-2 text-white rounded-5 link-underline-opacity-0 text-decoration-none"
+          style="background-color: rgb(2, 112, 112); ">View Photos</a>            <!---navigates to the /albums/albumId/photos --> 
+      </div>
+    </div>
+  </div>
+</div>
